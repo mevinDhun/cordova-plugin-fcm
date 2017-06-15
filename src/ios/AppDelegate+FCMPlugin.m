@@ -112,7 +112,16 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     completionHandler(UIBackgroundFetchResultNoData);
 }
 // [END receive_message]
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"APNS token: %@", token);
+}
 
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"%@",error.localizedDescription);
+}
 // [START refresh_token]
 - (void)tokenRefreshNotification:(NSNotification *)notification
 {
@@ -121,6 +130,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     // should be done.
     NSString *refreshedToken = [[FIRInstanceID instanceID] token];
     NSLog(@"InstanceID token: %@", refreshedToken);
+    [FCMPlugin.fcmPlugin notifyOfTokenRefresh:refreshedToken];
 
     // Connect to FCM since connection may have failed when attempted before having a token.
     [self connectToFcm];
@@ -132,6 +142,15 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 // [START connect_to_fcm]
 - (void)connectToFcm
 {
+    
+    // Won't connect since there is no token
+        if (![[FIRInstanceID instanceID] token]) {
+                return;
+           }
+    
+       // Disconnect previous FCM connection if it exists.
+        [[FIRMessaging messaging] disconnect];
+    
     [[FIRMessaging messaging] connectWithCompletion:^(NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"Unable to connect to FCM. %@", error);

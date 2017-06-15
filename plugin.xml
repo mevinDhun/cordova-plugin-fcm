@@ -78,6 +78,16 @@
                 <param name="ios-package" value="FCMPlugin"/>
             </feature>
         </config-file>
+
+        <!-- ENABLE PUSH CAPABILITY -->
+ 		<config-file parent="aps-environment" target="*/Entitlements-Debug.plist">
+ 		    <string>development</string>
+ 		</config-file>
+ 		<config-file parent="aps-environment" target="*/Entitlements-Release.plist">
+ 			<string>production</string>
+ 		</config-file>
+		
+ 		<resource-file src="src/ios/GoogleService-Info.plist" target="Resources/GoogleService-Info.plist" />
 		
         <header-file src="src/ios/FCMPlugin.h" />
         <source-file src="src/ios/FCMPlugin.m" />
