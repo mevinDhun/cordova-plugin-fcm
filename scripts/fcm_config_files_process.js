@@ -38,6 +38,9 @@ if (directoryExists("platforms/ios")) {
 
     if (fileExists( path )) {
       try {
+        if (!directoryExists("platforms/ios/" + name + "/Resources")){
+          fs.mkdir("platforms/ios/" + name + "/Resources");
+        }
         var contents = fs.readFileSync(path).toString();
         fs.writeFileSync("platforms/ios/" + name + "/Resources/GoogleService-Info.plist", contents)
       } catch(err) {
@@ -54,6 +57,7 @@ if (directoryExists("platforms/android")) {
 
     if (fileExists( path )) {
       try {
+        
         var contents = fs.readFileSync(path).toString();
         fs.writeFileSync("platforms/android/google-services.json", contents);
 
