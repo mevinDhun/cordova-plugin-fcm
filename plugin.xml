@@ -102,5 +102,10 @@
 	<framework src="libz.tbd" />
 	<framework src="Security.framework" />
     </platform>
+
+    
+	<!-- COPY FCM CONFIG FILES TO PLATFORM AFTER PLUGIN INSTALL OR PLATFORM PREPARE -->
+	<hook src="scripts/fcm_config_files_process.js" type="after_plugin_add" />
+	<hook src="scripts/fcm_config_files_process.js" type="after_prepare" />
 	
 </plugin>
