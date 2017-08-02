@@ -131,11 +131,13 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     // time. So if you need to retrieve the token as soon as it is available this is where that
     // should be done.
     NSString *refreshedToken = [[FIRInstanceID instanceID] token];
+    if (refreshedToken){
     NSLog(@"InstanceID token: %@", refreshedToken);
     [FCMPlugin.fcmPlugin notifyOfTokenRefresh:refreshedToken];
 
     // Connect to FCM since connection may have failed when attempted before having a token.
     [self connectToFcm];
+    }
 
     // TODO: If necessary send token to appliation server.
 }
