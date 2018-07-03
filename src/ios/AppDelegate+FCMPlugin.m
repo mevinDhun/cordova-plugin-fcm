@@ -10,8 +10,7 @@
 #import <objc/runtime.h>
 #import <Foundation/Foundation.h>
 
-#import "Firebase.h"
-
+@import Firebase;
 @implementation AppDelegate (MCPlugin)
 
 static NSData *lastPush;
