@@ -26,7 +26,7 @@ static NSData *lastPush;
 - (BOOL)application:(UIApplication *)application customDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     [self application:application customDidFinishLaunchingWithOptions:launchOptions];
-
+     application.applicationIconBadgeNumber = 0;
     NSLog(@"DidFinishLaunchingWithOptions");
     // Register for remote notifications
 
